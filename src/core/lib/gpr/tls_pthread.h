@@ -42,7 +42,10 @@ struct gpr_pthread_thread_local {
  *  GPR_TLS_CLASS_DEF needs to be called to define this member. */
 #define GPR_TLS_CLASS_DEF(name) struct gpr_pthread_thread_local name = {0}
 
-#define gpr_tls_init(tls) GPR_ASSERT(0 == pthread_key_create(&(tls)->key, NULL))
+#define gpr_tls_init(tls) \
+  GPR_ASSERT(0 == pthread_key_create(&(tls)->key, NULL)); \
+  gpr_log(GPR_ERROR, "gpr_tls_init, %p", &(tls)->key)
+
 #define gpr_tls_destroy(tls) pthread_key_delete((tls)->key)
 #define gpr_tls_get(tls) ((intptr_t)pthread_getspecific((tls)->key))
 #ifdef __cplusplus
