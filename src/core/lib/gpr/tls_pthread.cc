@@ -24,7 +24,8 @@
 
 intptr_t gpr_tls_set(struct gpr_pthread_thread_local* tls, intptr_t value) {
   auto res = pthread_setspecific(tls->key, (void*)value);
-  GPR_ASSERT(0 == res) << res;
+  gpr_log(GPR_ERROR, "gpr_tls_set, %p, %d", &tls->key, res);
+  GPR_ASSERT(0 == res);
   return value;
 }
 
