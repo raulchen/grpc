@@ -126,6 +126,7 @@ void grpc_init(void) {
   gpr_once_init(&g_basic_init, do_basic_init);
 
   grpc_core::MutexLock lock(&g_init_mu);
+  gpr_log(GPR_ERROR, "grpc_init: %d", g_initializations);
   if (++g_initializations == 1) {
     if (g_shutting_down) {
       g_shutting_down = false;
