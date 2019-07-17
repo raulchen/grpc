@@ -25,6 +25,9 @@
 #include <grpcpp/support/channel_arguments.h>
 #include <grpcpp/support/config.h>
 #include "src/cpp/client/create_channel_internal.h"
+#include <grpcpp/impl/grpc_library.h>
+
+static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
 namespace grpc_impl {
 
@@ -57,6 +60,7 @@ class InsecureChannelCredentialsImpl final : public ChannelCredentials {
 }  // namespace
 
 std::shared_ptr<ChannelCredentials> InsecureChannelCredentials() {
+  g_gli_initializer.summon();
   gpr_log(GPR_ERROR, "InsecureChannelCredentials");
   grpc::GrpcLibraryCodegen init;  // To call grpc_init().
   return std::shared_ptr<ChannelCredentials>(
