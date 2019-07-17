@@ -31,6 +31,8 @@ namespace grpc {
 namespace internal {
 class GrpcLibrary final : public GrpcLibraryInterface {
  public:
+  GrpcLibrary(): GrpcLibrary(0) {}
+
   GrpcLibrary(int x) {
     x_ = x;
     std::cout << "GrpcLibrary() " << x << std::endl;
