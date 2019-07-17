@@ -57,6 +57,7 @@ class InsecureChannelCredentialsImpl final : public ChannelCredentials {
 }  // namespace
 
 std::shared_ptr<ChannelCredentials> InsecureChannelCredentials() {
+  grpc::GrpcLibraryCodegen init;  // To call grpc_init().
   return std::shared_ptr<ChannelCredentials>(
       new InsecureChannelCredentialsImpl());
 }
