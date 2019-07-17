@@ -51,7 +51,9 @@ class GrpcLibraryInitializer final {
       std::cout << "GrpcLibraryInitializer 1" << std::endl;
       static auto* const g_gli = new GrpcLibrary();
       grpc::g_glip = g_gli;
-      std::cout << "GrpcLibraryInitializer 2" << std::endl;
+      std::cout << "GrpcLibraryInitializer 2 " << std::endl;
+      GrpcLibrary lib;
+      std::cout << "GrpcLibraryInitializer 3 " << typeid(*grpc::g_glip).name() << std::endl;
     }
     if (grpc::g_core_codegen_interface == nullptr) {
       std::cout << "GrpcLibraryInitializer 3" << std::endl;
