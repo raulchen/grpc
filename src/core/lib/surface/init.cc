@@ -122,6 +122,7 @@ void grpc_register_plugin(void (*init)(void), void (*destroy)(void)) {
 }
 
 void grpc_init(void) {
+  gpr_log(GPR_ERROR, "grpc_init 0");
   int i;
   gpr_once_init(&g_basic_init, do_basic_init);
 

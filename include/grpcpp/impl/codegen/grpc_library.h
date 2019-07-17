@@ -20,6 +20,7 @@
 #define GRPCPP_IMPL_CODEGEN_GRPC_LIBRARY_H
 
 #include <grpcpp/impl/codegen/core_codegen_interface.h>
+#include <iostream>
 
 namespace grpc {
 
@@ -38,11 +39,15 @@ extern GrpcLibraryInterface* g_glip;
 class GrpcLibraryCodegen {
  public:
   GrpcLibraryCodegen(bool call_grpc_init = true) : grpc_init_called_(false) {
+    std::cout << "GrpcLibraryCodegen 0" << std::endl;
     if (call_grpc_init) {
+    std::cout << "GrpcLibraryCodegen 1" << std::endl;
       GPR_CODEGEN_ASSERT(g_glip &&
                          "gRPC library not initialized. See "
                          "grpc::internal::GrpcLibraryInitializer.");
+      std::cout << "GrpcLibraryCodegen 2" << std::endl;
       g_glip->init();
+      std::cout << "GrpcLibraryCodegen 3" << std::endl;
       grpc_init_called_ = true;
     }
   }
