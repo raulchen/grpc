@@ -20,6 +20,7 @@
 #define GRPCPP_IMPL_GRPC_LIBRARY_H
 
 #include <iostream>
+#include <execinfo.h>
 
 #include <grpc/grpc.h>
 #include <grpcpp/impl/codegen/config.h>
@@ -52,6 +53,9 @@ class GrpcLibraryInitializer final {
  public:
   GrpcLibraryInitializer() {
     std::cout << "GrpcLibraryInitializer 0" << std::endl;
+    void* buffer[255];
+    const int calls = backtrace(buffer, sizeof(buffer) / sizeof(void*));
+    backtrace_symbols_fd(buffer, calls, 1);
     if (grpc::g_glip == nullptr) {
       std::cout << "GrpcLibraryInitializer 1" << std::endl;
       static auto* const g_gli = new GrpcLibrary(2);
