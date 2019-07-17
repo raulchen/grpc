@@ -24,6 +24,11 @@
 
 intptr_t gpr_tls_set(struct gpr_pthread_thread_local* tls, intptr_t value) {
   auto res = pthread_setspecific(tls->key, (void*)value);
+  if (res != 0) {
+    void* buffer[255];
+    const int calls = backtrace(buffer, sizeof(buffer) / sizeof(void*));
+    backtrace_symbols_fd(buffer, calls, 1);
+  }
   gpr_log(GPR_ERROR, "gpr_tls_set, %p, %d", &tls->key, res);
   GPR_ASSERT(0 == res);
   return value;
