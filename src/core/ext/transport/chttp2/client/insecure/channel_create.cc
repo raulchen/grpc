@@ -88,19 +88,25 @@ void FactoryInit() {
 grpc_channel* grpc_insecure_channel_create(const char* target,
                                            const grpc_channel_args* args,
                                            void* reserved) {
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 000");
   grpc_core::ExecCtx exec_ctx;
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 111");
   GRPC_API_TRACE(
       "grpc_insecure_channel_create(target=%s, args=%p, reserved=%p)", 3,
       (target, args, reserved));
   GPR_ASSERT(reserved == nullptr);
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 112");
   // Add channel arg containing the client channel factory.
   gpr_once_init(&g_factory_once, FactoryInit);
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 113");
   grpc_arg arg = grpc_core::ClientChannelFactory::CreateChannelArg(g_factory);
   grpc_channel_args* new_args = grpc_channel_args_copy_and_add(args, &arg, 1);
   // Create channel.
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 114");
   grpc_channel* channel = g_factory->CreateChannel(target, new_args);
   // Clean up.
   grpc_channel_args_destroy(new_args);
+  gpr_log(GPR_ERROR, "grpc_insecure_channel_create 115");
   return channel != nullptr ? channel
                             : grpc_lame_client_channel_create(
                                   target, GRPC_STATUS_INTERNAL,

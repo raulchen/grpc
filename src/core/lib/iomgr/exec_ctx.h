@@ -103,8 +103,11 @@ class ExecCtx {
   /** Default Constructor */
 
   ExecCtx() : flags_(GRPC_EXEC_CTX_FLAG_IS_FINISHED) {
+    gpr_log(GPR_ERROR, "ExecCtx() 000");
     grpc_core::Fork::IncExecCtxCount();
+    gpr_log(GPR_ERROR, "ExecCtx() 111");
     Set(this);
+    gpr_log(GPR_ERROR, "ExecCtx() 222");
   }
 
   /** Parameterised Constructor */
@@ -214,6 +217,7 @@ class ExecCtx {
   }
 
   static void Set(ExecCtx* exec_ctx) {
+    gpr_log(GPR_ERROR, "ExecCtx::Set 000");
     gpr_tls_set(&exec_ctx_, reinterpret_cast<intptr_t>(exec_ctx));
   }
 
