@@ -17,6 +17,7 @@
  */
 
 #include <grpc/support/port_platform.h>
+#include <execinfo.h>
 
 #include "src/core/lib/iomgr/exec_ctx.h"
 
@@ -131,6 +132,9 @@ void ExecCtx::GlobalInit(void) {
   g_start_time_sec = g_start_time.tv_sec;
   g_start_time_nsec = g_start_time.tv_nsec;
 #endif
+  void* buffer[255];
+  const int calls = backtrace(buffer, sizeof(buffer) / sizeof(void*));
+  backtrace_symbols_fd(buffer, calls, 1);
   gpr_tls_init(&exec_ctx_);
 }
 
