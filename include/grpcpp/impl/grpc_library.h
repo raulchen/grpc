@@ -31,8 +31,12 @@ namespace grpc {
 namespace internal {
 class GrpcLibrary final : public GrpcLibraryInterface {
  public:
+   GrpcLibrary() {
+    std::cout << "GrpcLibrary()" << std::endl;
+   }
+
   void init() override {
-    std::cout << "init 0" << std::endl;
+    std::cout << "GrpcLibrary init" << std::endl;
     grpc_init();
   }
   void shutdown() override { grpc_shutdown(); }
@@ -42,14 +46,18 @@ class GrpcLibrary final : public GrpcLibraryInterface {
 class GrpcLibraryInitializer final {
  public:
   GrpcLibraryInitializer() {
-    std::cout << "GrpcLibraryInitializer" << std::endl;
+    std::cout << "GrpcLibraryInitializer 0" << std::endl;
     if (grpc::g_glip == nullptr) {
+      std::cout << "GrpcLibraryInitializer 1" << std::endl;
       static auto* const g_gli = new GrpcLibrary();
       grpc::g_glip = g_gli;
+      std::cout << "GrpcLibraryInitializer 2" << std::endl;
     }
     if (grpc::g_core_codegen_interface == nullptr) {
+      std::cout << "GrpcLibraryInitializer 3" << std::endl;
       static auto* const g_core_codegen = new CoreCodegen();
       grpc::g_core_codegen_interface = g_core_codegen;
+      std::cout << "GrpcLibraryInitializer 4" << std::endl;
     }
   }
 
