@@ -31,15 +31,18 @@ namespace grpc {
 namespace internal {
 class GrpcLibrary final : public GrpcLibraryInterface {
  public:
-   GrpcLibrary() {
-    std::cout << "GrpcLibrary()" << std::endl;
-   }
+  GrpcLibrary(int x) {
+    x_ = x;
+    std::cout << "GrpcLibrary() " << x << std::endl;
+  }
 
   void init() override {
     std::cout << "GrpcLibrary init" << std::endl;
     grpc_init();
   }
   void shutdown() override { grpc_shutdown(); }
+
+  int x_;
 };
 
 /// Instantiating this class ensures the proper initialization of gRPC.
@@ -49,11 +52,10 @@ class GrpcLibraryInitializer final {
     std::cout << "GrpcLibraryInitializer 0" << std::endl;
     if (grpc::g_glip == nullptr) {
       std::cout << "GrpcLibraryInitializer 1" << std::endl;
-      static auto* const g_gli = new GrpcLibrary();
+      static auto* const g_gli = new GrpcLibrary(2);
       grpc::g_glip = g_gli;
-      std::cout << "GrpcLibraryInitializer 2 " << std::endl;
-      GrpcLibrary lib;
-      std::cout << "GrpcLibraryInitializer 3 " << typeid(*grpc::g_glip).name() << std::endl;
+      std::cout << "GrpcLibraryInitializer 2 " << grpc::g_glip << ", "
+                << static_cast<GrpcLibrary*>(grpc::g_glip)->x_ << std::endl;
     }
     if (grpc::g_core_codegen_interface == nullptr) {
       std::cout << "GrpcLibraryInitializer 3" << std::endl;

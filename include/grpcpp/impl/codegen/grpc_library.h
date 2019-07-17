@@ -45,7 +45,7 @@ class GrpcLibraryCodegen {
       GPR_CODEGEN_ASSERT(g_glip &&
                          "gRPC library not initialized. See "
                          "grpc::internal::GrpcLibraryInitializer.");
-      std::cout << "GrpcLibraryCodegen 2" << std::endl;
+      std::cout << "GrpcLibraryCodegen 2 " << g_glip << std::endl;
       g_glip->init();
       std::cout << "GrpcLibraryCodegen 3" << std::endl;
       grpc_init_called_ = true;
